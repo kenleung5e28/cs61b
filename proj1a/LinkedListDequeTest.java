@@ -19,6 +19,14 @@ public class LinkedListDequeTest {
 		return true;
 	}
 
+	public static boolean checkGet(int expected, int actual) {
+		if (expected != actual) {
+			System.out.println("get() returned " + actual + ", but expected: " + expected);
+			return false;
+		}
+		return true;
+	}
+
 	/* Prints a nice message based on whether a test passed. 
 	 * The \n means newline. */
 	public static void printTestStatus(boolean passed) {
@@ -78,9 +86,38 @@ public class LinkedListDequeTest {
 		printTestStatus(passed);
 	}
 
+	public static void addGetTest() {
+		System.out.println("Running add/get test.");
+
+		LinkedListDeque<Integer> lld1 = new LinkedListDeque<>();
+
+		lld1.addFirst(10);
+		lld1.addLast(20);
+		boolean passed = checkSize(2, lld1.size());
+		passed = checkGet(20, lld1.get(1)) && passed;
+
+		printTestStatus(passed);
+	}
+
+	public static void getRemoveLastTest() {
+		System.out.println("Running get/removeLast test.");
+
+		LinkedListDeque<Integer> lld1 = new LinkedListDeque<>();
+
+		lld1.addFirst(1);
+		lld1.addFirst(2);
+		lld1.addFirst(3);
+		lld1.removeLast();
+		boolean passed = checkSize(2, lld1.size());
+		passed = checkGet(1, lld1.get(1)) && passed;
+
+		printTestStatus(passed);
+	}
+
 	public static void main(String[] args) {
 		System.out.println("Running tests.\n");
 		addIsEmptySizeTest();
 		addRemoveTest();
+		addGetTest();
 	}
 } 
