@@ -35,6 +35,14 @@ public class LinkedListDequeTest {
 		return true;
 	}
 
+	public static boolean checkEqual(int expected, int actual) {
+		if (expected != actual) {
+			System.out.println("got " + actual + ", but expected: " + expected);
+			return false;
+		}
+		return true;
+	}
+
 	/* Prints a nice message based on whether a test passed. 
 	 * The \n means newline. */
 	public static void printTestStatus(boolean passed) {
@@ -51,7 +59,7 @@ public class LinkedListDequeTest {
 	  * && is the "and" operation. */
 	public static void addIsEmptySizeTest() {
 		System.out.println("Running add/isEmpty/Size test.");
-		LinkedListDeque<String> lld1 = new LinkedListDeque<String>();
+		LinkedListDeque<String> lld1 = new LinkedListDeque<>();
 
 		boolean passed = checkEmpty(true, lld1.isEmpty());
 
@@ -79,7 +87,7 @@ public class LinkedListDequeTest {
 
 		System.out.println("Running add/remove test.");
 
-		LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
+		LinkedListDeque<Integer> lld1 = new LinkedListDeque<>();
 		// should be empty 
 		boolean passed = checkEmpty(true, lld1.isEmpty());
 
@@ -107,17 +115,23 @@ public class LinkedListDequeTest {
 		printTestStatus(passed);
 	}
 
-	public static void getRemoveLastTest() {
-		System.out.println("Running get/removeLast test.");
+	public static void getRemoveLastRemoveFirstTest() {
+		System.out.println("Running get/removeLast/removeFirst test.");
 
 		LinkedListDeque<Integer> lld1 = new LinkedListDeque<>();
 
 		lld1.addFirst(1);
 		lld1.addFirst(2);
 		lld1.addFirst(3);
-		lld1.removeLast();
+		int lastItem = lld1.removeLast();
+
 		boolean passed = checkSize(2, lld1.size());
 		passed = checkGet(2, lld1.get(1)) && passed;
+		passed = checkEqual(1, lastItem) && passed;
+
+		int firstItem = lld1.removeFirst();
+		passed = checkSize(1, lld1.size()) && passed;
+		passed = checkEqual(3, firstItem) && passed;
 
 		printTestStatus(passed);
 	}
@@ -140,7 +154,7 @@ public class LinkedListDequeTest {
 		addIsEmptySizeTest();
 		addRemoveTest();
 		addGetTest();
-		getRemoveLastTest();
+		getRemoveLastRemoveFirstTest();
 		getRecursiveTest();
 	}
 } 
