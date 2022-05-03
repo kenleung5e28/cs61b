@@ -41,10 +41,10 @@ public class LinkedListDeque<T> {
   }
 
   public void printDeque() {
-    Node node = sentinel.next;
-    while (node != sentinel) {
-      System.out.print(node.item.toString() + " ");
+    Node node = sentinel;
+    for (int i = 0; i < size(); i++) {
       node = node.next;
+      System.out.print(node.item.toString() + " ");
     }
     System.out.println();
   }
@@ -60,12 +60,27 @@ public class LinkedListDeque<T> {
   }
 
   public T get(int index) {
-    // TODO
-    return null;
+    if (index >= size() || index < 0) {
+      throw new IndexOutOfBoundsException("index must be a positive integer less than the size");
+    }
+    Node node = sentinel;
+    for (int i = 0; i <= index; i++) {
+      node = node.next;
+    }
+    return node.item;
   }
 
   public T getRecursive(int index) {
-    // TODO
-    return null;
+    if (index >= size() || index < 0) {
+      throw new IndexOutOfBoundsException("index must be a positive integer less than the size");
+    }
+    return getNodeRecursive(sentinel.next, index).item;
+  }
+
+  private Node getNodeRecursive(Node start, int index) {
+    if (index == 0) {
+      return start;
+    }
+    return getNodeRecursive(start.next, index - 1);
   }
 }
