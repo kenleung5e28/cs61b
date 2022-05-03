@@ -11,7 +11,7 @@ public class LinkedListDeque<T> {
   }
 
   private int nodeCount;
-  private Node sentinel;
+  private final Node sentinel;
   
   public LinkedListDeque() {
     nodeCount = 0;
@@ -29,11 +29,15 @@ public class LinkedListDeque<T> {
   }
 
   public void addLast(T item) {
-    // TODO
+    Node currLast = sentinel.prev;
+    Node newLast = new Node(item, currLast, sentinel);
+    currLast.next = newLast;
+    sentinel.prev = newLast;
+    nodeCount += 1;
   }
 
   public boolean isEmpty() {
-    return nodeCount == 0;
+    return size() == 0;
   }
 
   public int size() {
@@ -50,13 +54,27 @@ public class LinkedListDeque<T> {
   }
 
   public T removeFirst() {
-    // TODO
-    return null;
+    if (isEmpty()) {
+      throw new RuntimeException("Unable to remove an element when deque is empty");
+    }
+    Node first = sentinel.next;
+    Node second = first.next;
+    sentinel.next = second;
+    second.prev = sentinel;
+    nodeCount -= 1;
+    return first.item;
   }
 
   public T removeLast() {
-    // TODO
-    return null;
+    if (isEmpty()) {
+      throw new RuntimeException("Unable to remove an element when deque is empty");
+    }
+    Node last = sentinel.prev;
+    Node secondToLast = last.prev;
+    sentinel.prev = secondToLast;
+    secondToLast.next = sentinel;
+    nodeCount -= 1;
+    return last.item;
   }
 
   public T get(int index) {
