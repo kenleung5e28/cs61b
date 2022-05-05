@@ -15,8 +15,8 @@ public class ArrayDequeTest {
     }
   }
 
-  public static void addFirstSizeTest() {
-    System.out.println("Running addFirst/size test.");
+  public static void addFirstSizeGetTest() {
+    System.out.println("Running addFirst/size/get test.");
     ArrayDeque<Integer> ad = new ArrayDeque<>();
 
     ad.addFirst(10);
@@ -24,6 +24,9 @@ public class ArrayDequeTest {
     ad.addFirst(30);
 
     boolean passed = checkEqual(3, ad.size());
+    passed = checkEqual(30, ad.get(0)) && passed;
+    passed = checkEqual(20, ad.get(1)) && passed;
+    passed = checkEqual(10, ad.get(2)) && passed;
 
     System.out.println("Printing out deque: ");
     ad.printDeque();
@@ -50,7 +53,7 @@ public class ArrayDequeTest {
 
   public static void main(String[] args) {
     System.out.println("Running tests.\n");
-    addFirstSizeTest();
+    addFirstSizeGetTest();
     addFirstRemoveFirstTest();
   }
 }
