@@ -34,8 +34,8 @@ public class ArrayDequeTest {
     printTestStatus(passed);
   }
 
-  public static void addFirstRemoveFirstTest() {
-    System.out.println("Running addFirst/removeFirst test.");
+  public static void isEmptyTest() {
+    System.out.println("Running isEmpty test.");
     ArrayDeque<Integer> ad = new ArrayDeque<>();
 
     boolean passed = checkEqual(true, ad.isEmpty());
@@ -51,9 +51,65 @@ public class ArrayDequeTest {
     printTestStatus(passed);
   }
 
+  public static void removeFirstTest() {
+    System.out.println("Running removeFirst test.");
+    ArrayDeque<Integer> ad = new ArrayDeque<>();
+
+    ad.addFirst(10);
+    ad.addFirst(20);
+    ad.addFirst(30);
+    int item = ad.removeFirst();
+
+    boolean passed = checkEqual(2, ad.size());
+    passed = checkEqual(30, item) && passed;
+    passed = checkEqual(20, ad.get(0)) && passed;
+    passed = checkEqual(10, ad.get(1)) && passed;
+
+    System.out.println("Printing out deque: ");
+    ad.printDeque();
+
+    printTestStatus(passed);
+  }
+
+  public static void addLastTest() {
+    System.out.println("Running addLast test.");
+    ArrayDeque<Integer> ad = new ArrayDeque<>();
+
+    ad.addLast(10);
+    ad.addLast(20);
+    ad.addLast(30);
+
+    boolean passed = checkEqual(3, ad.size());
+    passed = checkEqual(10, ad.get(0)) && passed;
+    passed = checkEqual(20, ad.get(1)) && passed;
+    passed = checkEqual(30, ad.get(2)) && passed;
+
+    printTestStatus(passed);
+  }
+
+  public static void removeLastTest() {
+    System.out.println("Running removeLast test.");
+    ArrayDeque<Integer> ad = new ArrayDeque<>();
+
+    ad.addLast(10);
+    ad.addLast(20);
+    ad.addLast(30);
+    int item = ad.removeLast();
+
+    boolean passed = checkEqual(2, ad.size());
+    passed = checkEqual(30, item) && passed;
+    passed = checkEqual(10, ad.get(0)) && passed;
+    passed = checkEqual(20, ad.get(1)) && passed;
+
+    printTestStatus(passed);
+  }
+
   public static void main(String[] args) {
     System.out.println("Running tests.\n");
     addFirstSizeGetTest();
-    addFirstRemoveFirstTest();
+    isEmptyTest();
+    addLastTest();
+    removeFirstTest();
+    removeLastTest();
   }
 }
