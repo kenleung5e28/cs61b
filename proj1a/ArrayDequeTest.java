@@ -1,7 +1,7 @@
 public class ArrayDequeTest {
   public static <T> boolean checkEqual(T expected, T actual) {
-    if (expected != actual) {
-      System.out.println("got " + actual.toString() + ", but expected: " + expected.toString());
+    if (!expected.equals(actual)) {
+      System.out.println("got " + actual + ", but expected: " + expected);
       return false;
     }
     return true;
@@ -17,7 +17,7 @@ public class ArrayDequeTest {
 
   public static void addFirstSizeTest() {
     System.out.println("Running addFirst/size test.");
-    LinkedListDeque<Integer> ad = new LinkedListDeque<>();
+    ArrayDeque<Integer> ad = new ArrayDeque<>();
 
     ad.addFirst(10);
     ad.addFirst(20);
@@ -33,7 +33,7 @@ public class ArrayDequeTest {
 
   public static void addFirstRemoveFirstTest() {
     System.out.println("Running addFirst/removeFirst test.");
-    LinkedListDeque<Integer> ad = new LinkedListDeque<>();
+    ArrayDeque<Integer> ad = new ArrayDeque<>();
 
     boolean passed = checkEqual(true, ad.isEmpty());
 

@@ -19,18 +19,24 @@ public class ArrayDeque<T> {
 
   public int size() { return wrapIndex(nextLast - nextFirst) - 1; }
 
-  public void printQueue() {
+  public void printDeque() {
     for (int i = indexIncrement(nextFirst); i < nextLast; i = indexIncrement(i)) {
       System.out.print(items[i].toString() + " ");
     }
     System.out.println();
   }
 
-  public T removeFirst() {}
+  public T removeFirst() {
+    return null;
+  }
 
-  public T removeLast() {}
+  public T removeLast() {
+    return null;
+  }
 
-  public T get(int index) {}
+  public T get(int index) {
+    return null;
+  }
 
 
   private int wrapIndex(int index) {
