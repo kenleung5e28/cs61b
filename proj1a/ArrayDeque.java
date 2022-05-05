@@ -28,7 +28,13 @@ public class ArrayDeque<T> {
   }
 
   public void addLast(T item) {
-    // TODO
+    // temp behavior: throw exception when items array is full
+    if (size() == items.length) {
+      throw new RuntimeException("unable to add new element when deque is full");
+    }
+
+    items[nextLast] = item;
+    nextLast = incIndex(nextLast);
   }
 
   public boolean isEmpty() { return size() == 0; }
@@ -54,8 +60,13 @@ public class ArrayDeque<T> {
   }
 
   public T removeLast() {
-    // TODO
-    return null;
+    if (isEmpty()) {
+      throw new RuntimeException("unable to remove element when deque is empty");
+    }
+
+    T result = get(size() - 1);
+    nextLast = decIndex(nextLast);
+    return result;
   }
 
   public T get(int index) {
