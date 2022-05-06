@@ -6,10 +6,31 @@
 
 public class ArrayDeque<T> {
   private static final int INIT_SIZE = 8;
+  private static final int FACTOR = 2;
 
   private T[] items;
   private int nextFirst;
   private int nextLast;
+
+  private double usageFactor() {
+    return (double)size() / (double)items.length;
+  }
+
+  private boolean needExpansion() {
+    return usageFactor() > 0.75;
+  }
+
+  private boolean needShrinkage() {
+    return usageFactor() < 0.25;
+  }
+
+  private void expand() {
+    // TODO
+  }
+
+  private void shrink() {
+    // TODO
+  }
 
   public ArrayDeque() {
     items = (T[])new Object[INIT_SIZE];
