@@ -104,6 +104,25 @@ public class ArrayDequeTest {
     printTestStatus(passed);
   }
 
+  public static void addManyItemsTest() {
+    System.out.println("Running adding many items test.");
+    ArrayDeque<Integer> ad = new ArrayDeque<>();
+
+    for (int i = 1; i <= 100; i++) {
+      ad.addLast(i);
+    }
+
+    boolean passed = checkEqual(100, ad.size());
+    passed = checkEqual(1, ad.get(0)) && passed;
+    passed = checkEqual(50, ad.get(49)) && passed;
+    passed = checkEqual(100, ad.get(99)) && passed;
+
+    System.out.println("Printing out deque: ");
+    ad.printDeque();
+
+    printTestStatus(passed);
+  }
+
   public static void main(String[] args) {
     System.out.println("Running tests.\n");
     addFirstSizeGetTest();
@@ -111,5 +130,6 @@ public class ArrayDequeTest {
     addLastTest();
     removeFirstTest();
     removeLastTest();
+    addManyItemsTest();
   }
 }
