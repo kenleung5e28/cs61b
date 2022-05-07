@@ -163,4 +163,4 @@ public class LinkedListDequeTest {
         getRemoveLastRemoveFirstTest();
         getRecursiveTest();
     }
-} 
+}
