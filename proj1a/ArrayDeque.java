@@ -24,12 +24,30 @@ public class ArrayDeque<T> {
     return usageFactor() < 0.25;
   }
 
+  private void copyAndReplaceItems(T[] newItems) {
+    int items_size = size();
+    int begin = incIndex(nextFirst);
+    int end = nextLast;
+    // items are wrapped
+    if (end < begin) {
+      System.arraycopy(items, begin, newItems, 0, items.length - begin);
+      System.arraycopy(items, 0, newItems, items.length - begin, end);
+    } else {
+      System.arraycopy(items, begin, newItems, 0, items_size);
+    }
+    nextFirst = newItems.length - 1;
+    nextLast = items_size;
+    items = newItems;
+  }
+
   private void expand() {
-    // TODO
+    T[] newItems = (T[])new Object[items.length * FACTOR];
+    copyAndReplaceItems(newItems);
   }
 
   private void shrink() {
-    // TODO
+    T[] newItems = (T[])new Object[items.length / FACTOR];
+    copyAndReplaceItems(newItems);
   }
 
   public ArrayDeque() {
@@ -39,28 +57,33 @@ public class ArrayDeque<T> {
   }
 
   public void addFirst(T item) {
-    // temp behavior: throw exception when items array is full
-    if (size() == items.length) {
-      throw new RuntimeException("unable to add new element when deque is full");
+    if (needExpansion()) {
+      expand();
     }
-
     items[nextFirst] = item;
     nextFirst = decIndex(nextFirst);
   }
 
   public void addLast(T item) {
-    // temp behavior: throw exception when items array is full
-    if (size() == items.length) {
-      throw new RuntimeException("unable to add new element when deque is full");
+    if (needExpansion()) {
+      expand();
     }
-
     items[nextLast] = item;
     nextLast = incIndex(nextLast);
   }
 
   public boolean isEmpty() { return size() == 0; }
 
-  public int size() { return wrapIndex(nextLast - nextFirst) - 1; }
+  public int size() {
+    int begin = incIndex(nextFirst);
+    int end = nextLast;
+    // items are wrapped
+    if (end < begin) {
+      return items.length - begin + end;
+    } else {
+      return end - begin;
+    }
+  }
 
   public void printDeque() {
     int count = size();
@@ -77,6 +100,9 @@ public class ArrayDeque<T> {
 
     T result = get(0);
     nextFirst = incIndex(nextFirst);
+    if (needShrinkage()) {
+      shrink();
+    }
     return result;
   }
 
@@ -87,6 +113,9 @@ public class ArrayDeque<T> {
 
     T result = get(size() - 1);
     nextLast = decIndex(nextLast);
+    if (needShrinkage()) {
+      shrink();
+    }
     return result;
   }
 

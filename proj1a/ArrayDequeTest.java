@@ -15,6 +15,21 @@ public class ArrayDequeTest {
     }
   }
 
+  public static void sizeTest() {
+    System.out.println("Running size test.");
+    ArrayDeque<Integer> ad = new ArrayDeque<>();
+
+    boolean passed = checkEqual(0, ad.size());
+
+    for (int i = 0; i < 8; i++) {
+      ad.addLast(i);
+    }
+
+    passed = checkEqual(8, ad.size()) && passed;
+
+    printTestStatus(passed);
+  }
+
   public static void addFirstSizeGetTest() {
     System.out.println("Running addFirst/size/get test.");
     ArrayDeque<Integer> ad = new ArrayDeque<>();
@@ -117,19 +132,36 @@ public class ArrayDequeTest {
     passed = checkEqual(50, ad.get(49)) && passed;
     passed = checkEqual(100, ad.get(99)) && passed;
 
-    System.out.println("Printing out deque: ");
-    ad.printDeque();
+    printTestStatus(passed);
+  }
+
+  public static void removeManyItemsTest() {
+    System.out.println("Running removing many items test.");
+    ArrayDeque<Integer> ad = new ArrayDeque<>();
+
+    for (int i = 1; i <= 100; i++) {
+      ad.addLast(i);
+    }
+    for (int i = 1; i <= 98; i++) {
+      ad.removeFirst();
+    }
+
+    boolean passed = checkEqual(2, ad.size());
+    passed = checkEqual(99, ad.get(0)) && passed;
+    passed = checkEqual(100, ad.get(1)) && passed;
 
     printTestStatus(passed);
   }
 
   public static void main(String[] args) {
     System.out.println("Running tests.\n");
-    addFirstSizeGetTest();
+    sizeTest();
     isEmptyTest();
+    addFirstSizeGetTest();
     addLastTest();
     removeFirstTest();
     removeLastTest();
     addManyItemsTest();
+    removeManyItemsTest();
   }
 }
