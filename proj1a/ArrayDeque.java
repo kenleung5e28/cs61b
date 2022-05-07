@@ -15,11 +15,11 @@ public class ArrayDeque<T> {
     }
 
     private boolean needShrinkage() {
-        return usageFactor() < 0.25;
+        return items.length > FACTOR * INIT_SIZE && usageFactor() < 0.25;
     }
 
     private void copyAndReplaceItems(T[] newItems) {
-        int items_size = size();
+        int itemsSize = size();
         int begin = incIndex(nextFirst);
         int end = nextLast;
         // items are wrapped
@@ -27,10 +27,10 @@ public class ArrayDeque<T> {
             System.arraycopy(items, begin, newItems, 0, items.length - begin);
             System.arraycopy(items, 0, newItems, items.length - begin, end);
         } else {
-            System.arraycopy(items, begin, newItems, 0, items_size);
+            System.arraycopy(items, begin, newItems, 0, itemsSize);
         }
         nextFirst = newItems.length - 1;
-        nextLast = items_size;
+        nextLast = itemsSize;
         items = newItems;
     }
 
@@ -93,9 +93,10 @@ public class ArrayDeque<T> {
         if (isEmpty()) {
             return null;
         }
-
-        T result = get(0);
-        nextFirst = incIndex(nextFirst);
+        int first = incIndex(nextFirst);
+        T result = items[first];
+        items[first] = null;
+        nextFirst = first;
         if (needShrinkage()) {
             shrink();
         }
@@ -104,11 +105,12 @@ public class ArrayDeque<T> {
 
     public T removeLast() {
         if (isEmpty()) {
-           return null;
+            return null;
         }
-
-        T result = get(size() - 1);
-        nextLast = decIndex(nextLast);
+        int last = decIndex(nextLast);
+        T result = items[last];
+        items[last] = null;
+        nextLast = last;
         if (needShrinkage()) {
             shrink();
         }
