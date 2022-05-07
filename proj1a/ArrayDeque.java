@@ -91,7 +91,7 @@ public class ArrayDeque<T> {
 
     public T removeFirst() {
         if (isEmpty()) {
-            throw new RuntimeException("unable to remove element when deque is empty");
+            return null;
         }
 
         T result = get(0);
@@ -104,7 +104,7 @@ public class ArrayDeque<T> {
 
     public T removeLast() {
         if (isEmpty()) {
-            throw new RuntimeException("unable to remove element when deque is empty");
+           return null;
         }
 
         T result = get(size() - 1);
@@ -117,7 +117,7 @@ public class ArrayDeque<T> {
 
     public T get(int index) {
         if (index < 0 || index >= size()) {
-            throw new ArrayIndexOutOfBoundsException("index out of bound");
+            return null;
         }
         int realIndex = wrapIndex(nextFirst + 1 + index);
         return items[realIndex];

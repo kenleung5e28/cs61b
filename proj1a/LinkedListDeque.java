@@ -56,7 +56,7 @@ public class LinkedListDeque<T> {
 
     public T removeFirst() {
         if (isEmpty()) {
-            throw new RuntimeException("Unable to remove an element when deque is empty");
+            return null;
         }
         Node first = sentinel.next;
         Node second = first.next;
@@ -68,7 +68,7 @@ public class LinkedListDeque<T> {
 
     public T removeLast() {
         if (isEmpty()) {
-            throw new RuntimeException("Unable to remove an element when deque is empty");
+            return null;
         }
         Node last = sentinel.prev;
         Node secondToLast = last.prev;
@@ -80,7 +80,7 @@ public class LinkedListDeque<T> {
 
     public T get(int index) {
         if (index >= size() || index < 0) {
-            throw new IndexOutOfBoundsException("index must be a positive integer less than the size");
+            return null;
         }
         Node node = sentinel;
         for (int i = 0; i <= index; i++) {
@@ -91,7 +91,7 @@ public class LinkedListDeque<T> {
 
     public T getRecursive(int index) {
         if (index >= size() || index < 0) {
-            throw new IndexOutOfBoundsException("index must be a positive integer less than the size");
+            return null;
         }
         return getNodeRecursive(sentinel.next, index).item;
     }
