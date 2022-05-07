@@ -1,147 +1,144 @@
-/*
-* TODO:
-* 1. implement expanding items array upon usage factor exceeds a threshold
-* 2. implement shrinking items array upon usage factor falls below a threshold
-*/
-
 public class ArrayDeque<T> {
-  private static final int INIT_SIZE = 8;
-  private static final int FACTOR = 2;
+    private static final int INIT_SIZE = 8;
+    private static final int FACTOR = 2;
 
-  private T[] items;
-  private int nextFirst;
-  private int nextLast;
+    private T[] items;
+    private int nextFirst;
+    private int nextLast;
 
-  private double usageFactor() {
-    return (double)size() / (double)items.length;
-  }
-
-  private boolean needExpansion() {
-    return usageFactor() > 0.75;
-  }
-
-  private boolean needShrinkage() {
-    return usageFactor() < 0.25;
-  }
-
-  private void copyAndReplaceItems(T[] newItems) {
-    int items_size = size();
-    int begin = incIndex(nextFirst);
-    int end = nextLast;
-    // items are wrapped
-    if (end < begin) {
-      System.arraycopy(items, begin, newItems, 0, items.length - begin);
-      System.arraycopy(items, 0, newItems, items.length - begin, end);
-    } else {
-      System.arraycopy(items, begin, newItems, 0, items_size);
-    }
-    nextFirst = newItems.length - 1;
-    nextLast = items_size;
-    items = newItems;
-  }
-
-  private void expand() {
-    T[] newItems = (T[])new Object[items.length * FACTOR];
-    copyAndReplaceItems(newItems);
-  }
-
-  private void shrink() {
-    T[] newItems = (T[])new Object[items.length / FACTOR];
-    copyAndReplaceItems(newItems);
-  }
-
-  public ArrayDeque() {
-    items = (T[])new Object[INIT_SIZE];
-    nextFirst = INIT_SIZE - 1;
-    nextLast = 0;
-  }
-
-  public void addFirst(T item) {
-    if (needExpansion()) {
-      expand();
-    }
-    items[nextFirst] = item;
-    nextFirst = decIndex(nextFirst);
-  }
-
-  public void addLast(T item) {
-    if (needExpansion()) {
-      expand();
-    }
-    items[nextLast] = item;
-    nextLast = incIndex(nextLast);
-  }
-
-  public boolean isEmpty() { return size() == 0; }
-
-  public int size() {
-    int begin = incIndex(nextFirst);
-    int end = nextLast;
-    // items are wrapped
-    if (end < begin) {
-      return items.length - begin + end;
-    } else {
-      return end - begin;
-    }
-  }
-
-  public void printDeque() {
-    int count = size();
-    for (int i = 0; i < count; i++) {
-      System.out.print(get(i).toString() + " ");
-    }
-    System.out.println();
-  }
-
-  public T removeFirst() {
-    if (isEmpty()) {
-      throw new RuntimeException("unable to remove element when deque is empty");
+    private double usageFactor() {
+        return (double) size() / (double) items.length;
     }
 
-    T result = get(0);
-    nextFirst = incIndex(nextFirst);
-    if (needShrinkage()) {
-      shrink();
-    }
-    return result;
-  }
-
-  public T removeLast() {
-    if (isEmpty()) {
-      throw new RuntimeException("unable to remove element when deque is empty");
+    private boolean needExpansion() {
+        return usageFactor() > 0.75;
     }
 
-    T result = get(size() - 1);
-    nextLast = decIndex(nextLast);
-    if (needShrinkage()) {
-      shrink();
+    private boolean needShrinkage() {
+        return usageFactor() < 0.25;
     }
-    return result;
-  }
 
-  public T get(int index) {
-    if (index < 0 || index >= size()) {
-      throw new ArrayIndexOutOfBoundsException("index out of bound");
+    private void copyAndReplaceItems(T[] newItems) {
+        int items_size = size();
+        int begin = incIndex(nextFirst);
+        int end = nextLast;
+        // items are wrapped
+        if (end < begin) {
+            System.arraycopy(items, begin, newItems, 0, items.length - begin);
+            System.arraycopy(items, 0, newItems, items.length - begin, end);
+        } else {
+            System.arraycopy(items, begin, newItems, 0, items_size);
+        }
+        nextFirst = newItems.length - 1;
+        nextLast = items_size;
+        items = newItems;
     }
-    int realIndex = wrapIndex(nextFirst + 1 + index);
-    return items[realIndex];
-  }
 
-
-  private int wrapIndex(int index) {
-    if (index < 0) {
-      return index + items.length;
+    private void expand() {
+        T[] newItems = (T[]) new Object[items.length * FACTOR];
+        copyAndReplaceItems(newItems);
     }
-    if (index >= items.length) {
-      return index - items.length;
-    }
-    return index;
-  }
-  private int incIndex(int index) {
-    return wrapIndex(index + 1);
-  }
 
-  private int decIndex(int index) {
-    return wrapIndex(index - 1);
-  }
+    private void shrink() {
+        T[] newItems = (T[]) new Object[items.length / FACTOR];
+        copyAndReplaceItems(newItems);
+    }
+
+    public ArrayDeque() {
+        items = (T[]) new Object[INIT_SIZE];
+        nextFirst = INIT_SIZE - 1;
+        nextLast = 0;
+    }
+
+    public void addFirst(T item) {
+        if (needExpansion()) {
+            expand();
+        }
+        items[nextFirst] = item;
+        nextFirst = decIndex(nextFirst);
+    }
+
+    public void addLast(T item) {
+        if (needExpansion()) {
+            expand();
+        }
+        items[nextLast] = item;
+        nextLast = incIndex(nextLast);
+    }
+
+    public boolean isEmpty() {
+        return size() == 0;
+    }
+
+    public int size() {
+        int begin = incIndex(nextFirst);
+        int end = nextLast;
+        // items are wrapped
+        if (end < begin) {
+            return items.length - begin + end;
+        } else {
+            return end - begin;
+        }
+    }
+
+    public void printDeque() {
+        int count = size();
+        for (int i = 0; i < count; i++) {
+            System.out.print(get(i).toString() + " ");
+        }
+        System.out.println();
+    }
+
+    public T removeFirst() {
+        if (isEmpty()) {
+            throw new RuntimeException("unable to remove element when deque is empty");
+        }
+
+        T result = get(0);
+        nextFirst = incIndex(nextFirst);
+        if (needShrinkage()) {
+            shrink();
+        }
+        return result;
+    }
+
+    public T removeLast() {
+        if (isEmpty()) {
+            throw new RuntimeException("unable to remove element when deque is empty");
+        }
+
+        T result = get(size() - 1);
+        nextLast = decIndex(nextLast);
+        if (needShrinkage()) {
+            shrink();
+        }
+        return result;
+    }
+
+    public T get(int index) {
+        if (index < 0 || index >= size()) {
+            throw new ArrayIndexOutOfBoundsException("index out of bound");
+        }
+        int realIndex = wrapIndex(nextFirst + 1 + index);
+        return items[realIndex];
+    }
+
+
+    private int wrapIndex(int index) {
+        if (index < 0) {
+            return index + items.length;
+        }
+        if (index >= items.length) {
+            return index - items.length;
+        }
+        return index;
+    }
+
+    private int incIndex(int index) {
+        return wrapIndex(index + 1);
+    }
+
+    private int decIndex(int index) {
+        return wrapIndex(index - 1);
+    }
 }

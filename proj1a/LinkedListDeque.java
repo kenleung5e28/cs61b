@@ -1,104 +1,105 @@
 public class LinkedListDeque<T> {
-  private class Node {
-    public T item;
-    public Node prev;
-    public Node next;
-    public Node(T item, Node prev, Node next) {
-      this.item = item;
-      this.prev = prev;
-      this.next = next;
+    private class Node {
+        public T item;
+        public Node prev;
+        public Node next;
+
+        public Node(T item, Node prev, Node next) {
+            this.item = item;
+            this.prev = prev;
+            this.next = next;
+        }
     }
-  }
 
-  private int nodeCount;
-  private final Node sentinel;
-  
-  public LinkedListDeque() {
-    nodeCount = 0;
-    sentinel = new Node(null, null, null);
-    sentinel.prev = sentinel;
-    sentinel.next = sentinel;
-  }
+    private int nodeCount;
+    private final Node sentinel;
 
-  public void addFirst(T item) {
-    Node currFirst = sentinel.next;
-    Node newFirst = new Node(item, sentinel, currFirst);
-    currFirst.prev = newFirst;
-    sentinel.next = newFirst;
-    nodeCount += 1;
-  }
-
-  public void addLast(T item) {
-    Node currLast = sentinel.prev;
-    Node newLast = new Node(item, currLast, sentinel);
-    currLast.next = newLast;
-    sentinel.prev = newLast;
-    nodeCount += 1;
-  }
-
-  public boolean isEmpty() {
-    return size() == 0;
-  }
-
-  public int size() {
-    return nodeCount;
-  }
-
-  public void printDeque() {
-    Node node = sentinel;
-    for (int i = 0; i < size(); i++) {
-      node = node.next;
-      System.out.print(node.item.toString() + " ");
+    public LinkedListDeque() {
+        nodeCount = 0;
+        sentinel = new Node(null, null, null);
+        sentinel.prev = sentinel;
+        sentinel.next = sentinel;
     }
-    System.out.println();
-  }
 
-  public T removeFirst() {
-    if (isEmpty()) {
-      throw new RuntimeException("Unable to remove an element when deque is empty");
+    public void addFirst(T item) {
+        Node currFirst = sentinel.next;
+        Node newFirst = new Node(item, sentinel, currFirst);
+        currFirst.prev = newFirst;
+        sentinel.next = newFirst;
+        nodeCount += 1;
     }
-    Node first = sentinel.next;
-    Node second = first.next;
-    sentinel.next = second;
-    second.prev = sentinel;
-    nodeCount -= 1;
-    return first.item;
-  }
 
-  public T removeLast() {
-    if (isEmpty()) {
-      throw new RuntimeException("Unable to remove an element when deque is empty");
+    public void addLast(T item) {
+        Node currLast = sentinel.prev;
+        Node newLast = new Node(item, currLast, sentinel);
+        currLast.next = newLast;
+        sentinel.prev = newLast;
+        nodeCount += 1;
     }
-    Node last = sentinel.prev;
-    Node secondToLast = last.prev;
-    sentinel.prev = secondToLast;
-    secondToLast.next = sentinel;
-    nodeCount -= 1;
-    return last.item;
-  }
 
-  public T get(int index) {
-    if (index >= size() || index < 0) {
-      throw new IndexOutOfBoundsException("index must be a positive integer less than the size");
+    public boolean isEmpty() {
+        return size() == 0;
     }
-    Node node = sentinel;
-    for (int i = 0; i <= index; i++) {
-      node = node.next;
-    }
-    return node.item;
-  }
 
-  public T getRecursive(int index) {
-    if (index >= size() || index < 0) {
-      throw new IndexOutOfBoundsException("index must be a positive integer less than the size");
+    public int size() {
+        return nodeCount;
     }
-    return getNodeRecursive(sentinel.next, index).item;
-  }
 
-  private Node getNodeRecursive(Node start, int index) {
-    if (index == 0) {
-      return start;
+    public void printDeque() {
+        Node node = sentinel;
+        for (int i = 0; i < size(); i++) {
+            node = node.next;
+            System.out.print(node.item.toString() + " ");
+        }
+        System.out.println();
     }
-    return getNodeRecursive(start.next, index - 1);
-  }
+
+    public T removeFirst() {
+        if (isEmpty()) {
+            throw new RuntimeException("Unable to remove an element when deque is empty");
+        }
+        Node first = sentinel.next;
+        Node second = first.next;
+        sentinel.next = second;
+        second.prev = sentinel;
+        nodeCount -= 1;
+        return first.item;
+    }
+
+    public T removeLast() {
+        if (isEmpty()) {
+            throw new RuntimeException("Unable to remove an element when deque is empty");
+        }
+        Node last = sentinel.prev;
+        Node secondToLast = last.prev;
+        sentinel.prev = secondToLast;
+        secondToLast.next = sentinel;
+        nodeCount -= 1;
+        return last.item;
+    }
+
+    public T get(int index) {
+        if (index >= size() || index < 0) {
+            throw new IndexOutOfBoundsException("index must be a positive integer less than the size");
+        }
+        Node node = sentinel;
+        for (int i = 0; i <= index; i++) {
+            node = node.next;
+        }
+        return node.item;
+    }
+
+    public T getRecursive(int index) {
+        if (index >= size() || index < 0) {
+            throw new IndexOutOfBoundsException("index must be a positive integer less than the size");
+        }
+        return getNodeRecursive(sentinel.next, index).item;
+    }
+
+    private Node getNodeRecursive(Node start, int index) {
+        if (index == 0) {
+            return start;
+        }
+        return getNodeRecursive(start.next, index - 1);
+    }
 }
