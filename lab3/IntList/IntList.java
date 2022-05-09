@@ -125,7 +125,7 @@ public class IntList {
         IntList curr = A;
         IntList next = A.rest;
         while (next != null) {
-            temp = next.rest;
+            IntList temp = next.rest;
             next.rest = curr;
             curr.rest = prev;
             prev = curr;
