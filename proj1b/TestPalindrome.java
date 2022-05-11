@@ -39,4 +39,18 @@ public class TestPalindrome {
         boolean actual = palindrome.isPalindrome("racecar");
         assertTrue(actual);
     }
+
+    @Test
+    public void testIsPalindromeOffByOneTrue() {
+        OffByOne cc = new OffByOne();
+        boolean actual = palindrome.isPalindrome("abcdefedcb", cc);
+        assertTrue(actual);
+    }
+
+    @Test
+    public void testIsPalindromeOffByOneFalse() {
+        OffByOne cc = new OffByOne();
+        boolean actual = palindrome.isPalindrome("123454321", cc);
+        assertFalse(actual);
+    }
 }
