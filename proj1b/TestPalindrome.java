@@ -41,6 +41,20 @@ public class TestPalindrome {
     }
 
     @Test
+    public void testIsPalindromeOffByOneEmpty() {
+        OffByOne cc = new OffByOne();
+        boolean actual = palindrome.isPalindrome("", cc);
+        assertTrue(actual);
+    }
+
+    @Test
+    public void testIsPalindromeOffByOneLengthOne() {
+        OffByOne cc = new OffByOne();
+        boolean actual = palindrome.isPalindrome("<", cc);
+        assertTrue(actual);
+    }
+
+    @Test
     public void testIsPalindromeOffByOneTrue() {
         OffByOne cc = new OffByOne();
         boolean actual = palindrome.isPalindrome("abcdefedcb", cc);
