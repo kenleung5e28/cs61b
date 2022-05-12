@@ -35,4 +35,14 @@ public class TestOffByOne {
     public void testOffByOneCaseInsensitive() {
         assertFalse(offByOne.equalChars('C', 'd'));
     }
+
+    @Test
+    public void testOffByOneNonAlphanumericTrue() {
+        assertTrue(offByOne.equalChars('\\', ']'));
+    }
+
+    @Test
+    public void testOffByOneNonAlphanumericFalse() {
+        assertFalse(offByOne.equalChars('>', '<'));
+    }
 }
