@@ -1,5 +1,9 @@
 package synthesizer;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 /** Tests the ArrayRingBuffer class.
@@ -56,6 +60,23 @@ public class TestArrayRingBuffer {
         arb.dequeue();
         arb.dequeue();
         assertEquals(0, arb.fillCount());
+    }
+
+    @Test
+    public void testIteration() {
+        ArrayRingBuffer<Integer> arb = new ArrayRingBuffer<>(10);
+        arb.enqueue(2);
+        arb.enqueue(3);
+        arb.enqueue(5);
+        arb.enqueue(7);
+        arb.enqueue(11);
+        int[] items = new int[5];
+        int i = 0;
+        for (int item : arb) {
+            items[i] = item;
+            i++;
+        }
+        assertArrayEquals(new int[] {2, 3, 5, 7, 11}, items);
     }
 
     /** Calls tests for ArrayRingBuffer. */
