@@ -1,4 +1,4 @@
-// TODO: Make sure to make this class a part of the synthesizer package
+// DONE: Make sure to make this class a part of the synthesizer package
 package synthesizer;
 
 //Make sure this class is public
