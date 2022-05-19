@@ -1,0 +1,12 @@
+Strategy:
+Use binary space splitting tree for dungeon generation
+
+Reference:
+
+https://gamedev.stackexchange.com/questions/82059/algorithm-for-procedureral-2d-map-with-connected-paths?newreg=6ba2b893e7cb4284b2c78abe2e3bb900
+https://gamedevelopment.tutsplus.com/tutorials/how-to-use-bsp-trees-to-generate-game-maps--gamedev-12268
+
+Steps:
+1. Building the BSP tree
+2. Generating rooms
+3. Connecting rooms
