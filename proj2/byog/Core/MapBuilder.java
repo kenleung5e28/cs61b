@@ -19,7 +19,12 @@ public class MapBuilder {
         }
         Region whole = new Region(0, 0, width, height);
         BinaryTreeNode<Region> root = new BinaryTreeNode<>(whole);
-        
-        return null;
+        boolean splitVert = RandomUtils.uniform(random) > 0.5;
+        if (splitVert) {
+
+        } else {
+            
+        }
+        return root;
     }
 }
