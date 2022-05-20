@@ -13,8 +13,13 @@ public class MapBuilder {
         random = new Random(seed);
     }
 
-    public BinaryTree<Region> buildBSPTree() {
-        // TODO
+    public BinaryTreeNode<Region> buildBSPTree(int minSideLength) {
+        if (minSideLength <= 0 || minSideLength >= width || minSideLength >= height) {
+            throw new IllegalArgumentException("minSideLength must be a positive integer less than width and height.");
+        }
+        Region whole = new Region(0, 0, width, height);
+        BinaryTreeNode<Region> root = new BinaryTreeNode<>(whole);
+        
         return null;
     }
 }
