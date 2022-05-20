@@ -1,17 +1,17 @@
 package byog.Core;
 
-public class TreeNode<T> {
+public class BinaryTreeNode<T> {
     public T value;
-    public TreeNode<T> left;
-    public TreeNode<T> right;
+    public BinaryTreeNode<T> left;
+    public BinaryTreeNode<T> right;
 
-    public TreeNode(T value) {
+    public BinaryTreeNode(T value) {
         this.value = value;
         left = null;
         right = null;
     }
 
-    public TreeNode(T value, TreeNode<T> left, TreeNode<T> right) {
+    public BinaryTreeNode(T value, BinaryTreeNode<T> left, BinaryTreeNode<T> right) {
         this.value = value;
         this.left = left;
         this.right = right;
