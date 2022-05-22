@@ -1,6 +1,8 @@
 package byog.Core;
 
 import java.util.Random;
+import byog.TileEngine.TETile;
+import byog.TileEngine.Tileset;
 
 public class MapBuilder {
     private final Random random;
@@ -57,6 +59,10 @@ public class MapBuilder {
         node.right = new BinaryTreeNode<>(rightRegion);
         splitBSPTreeNode(node.left);
         splitBSPTreeNode(node.right);
+    }
+
+    private TETile[][] buildMapFromBSPTree(BinaryTreeNode<Region> bspTree) {
+
     }
 
     public static void main(String[] args) {
