@@ -39,7 +39,7 @@ public class MapBuilder {
         if (splitVertically) {
             int leftWidth = (region.width - 1) / 2;
             int rightWidth = region.width - leftWidth;
-            if (Math.min(leftWidth, rightWidth) < 2 * minSideLength) {
+            if (Math.min(leftWidth, rightWidth) < minSideLength) {
                 return;
             }
             leftRegion = new Region(region.x, region.y, leftWidth, region.height);
@@ -47,7 +47,7 @@ public class MapBuilder {
         } else {
             int leftHeight = (region.height - 1) / 2;
             int rightHeight = region.height - leftHeight;
-            if (Math.min(leftHeight, rightHeight) < 2 * minSideLength) {
+            if (Math.min(leftHeight, rightHeight) < minSideLength) {
                 return;
             }
             leftRegion = new Region(region.x, region.y, region.width, leftHeight);
@@ -55,5 +55,12 @@ public class MapBuilder {
         }
         node.left = new BinaryTreeNode<>(leftRegion);
         node.right = new BinaryTreeNode<>(rightRegion);
+        splitBSPTreeNode(node.left);
+        splitBSPTreeNode(node.right);
+    }
+
+    public static void main(String[] args) {
+        MapBuilder builder = new MapBuilder(12345, 100, 50, 5);
+        BinaryTreeNode<Region> bspTree = builder.buildBSPTree();
     }
 }
