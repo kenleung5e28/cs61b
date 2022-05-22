@@ -68,7 +68,7 @@ public class MapBuilder {
         for (int i = 0; i < width; i++) {
             TETile[] row = new TETile[height];
             for (int j = 0; j < height; j++) {
-                row[j] = Tileset.NOTHING;
+                row[j] = Tileset.WALL;
             }
             map[i] = row;
         }
@@ -88,6 +88,7 @@ public class MapBuilder {
         if (!node.isLeaf()) {
             renderBSPTreeNode(map, node.left);
             renderBSPTreeNode(map, node.right);
+            return;
         }
         Region region = node.value;
         int x0 = region.x;
@@ -96,17 +97,17 @@ public class MapBuilder {
         int y1 = y0 + region.height;
         for (int i = x0; i < x1; i++) {
             for (int j = y0; j < y1; j++) {
-                map[i][j] = Tileset.WALL;
+                map[i][j] = Tileset.FLOOR;
             }
         }
     }
 
     public static void main(String[] args) {
-        // TERenderer renderer = new TERenderer();
+        TERenderer renderer = new TERenderer();
         MapBuilder builder = new MapBuilder(12345, 100, 50, 5);
         BinaryTreeNode<Region> bspTree = builder.buildBSPTree();
         TETile[][] map = builder.buildMapFromBSPTree(bspTree);
-        DebugGame.printMap(map);
-        // renderer.renderFrame(map);
+        // DebugGame.printMap(map);
+        renderer.renderFrame(map);
     }
 }
