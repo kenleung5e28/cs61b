@@ -103,8 +103,11 @@ public class MapBuilder {
     }
 
     public static void main(String[] args) {
+        int width = 100;
+        int height = 50;
         TERenderer renderer = new TERenderer();
-        MapBuilder builder = new MapBuilder(12345, 100, 50, 5);
+        renderer.initialize(width, height);
+        MapBuilder builder = new MapBuilder(12345, width, height, 5);
         BinaryTreeNode<Region> bspTree = builder.buildBSPTree();
         TETile[][] map = builder.buildMapFromBSPTree(bspTree);
         // DebugGame.printMap(map);
