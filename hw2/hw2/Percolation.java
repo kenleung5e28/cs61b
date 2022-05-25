@@ -3,13 +3,14 @@ package hw2;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
-    // During initialization, we connect all the sites on the (N - 1)th row in the union-find structure,
-    // so that percolation can be checked by asking only whether (N - 1, 0) is full.
+    // TODO
+    // add two special sites that connects to all sites on the top row and
+    // all sites on the bottom row respectively, so that only one connected()
+    // call is needed to test for percolation
     private final int N;
     private final WeightedQuickUnionUF components;
     private final boolean[] opened;
     private int openedCount;
-    private boolean someBottomSiteOpened;
 
     private int rowColToIndex(int row, int col) {
         if (row < 0 || row >= N || col < 0 || col >= N) {
@@ -26,10 +27,6 @@ public class Percolation {
         this.components = new WeightedQuickUnionUF(N * N);
         this.opened = new boolean[N * N];
         this.openedCount = 0;
-        this.someBottomSiteOpened = false;
-        for (int i = 1; i < N; i++) {
-            components.union(rowColToIndex(N - 1, 0), rowColToIndex(N - 1, i));
-        }
     }
 
     // open the site (row, col) if it is not open already
@@ -79,7 +76,8 @@ public class Percolation {
 
     // does the system percolate?
     public boolean percolates() {
-        return someBottomSiteOpened && components.find(rowColToIndex(N - 1, 0)) < N;
+        // TODO
+        return false;
     }
 
     public static void main(String[] args) {
