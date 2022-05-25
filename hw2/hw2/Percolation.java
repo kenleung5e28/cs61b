@@ -3,7 +3,6 @@ package hw2;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
-    // TODO
     // add two special sites that connects to all sites on the top row and
     // all sites on the bottom row respectively, so that only one connected()
     // call is needed to test for percolation
@@ -24,9 +23,15 @@ public class Percolation {
             throw new IllegalArgumentException("N must be positive.");
         }
         this.N = N;
-        this.components = new WeightedQuickUnionUF(N * N);
+        // The second-to-last site is the extra top site
+        // and the last site is the extra bottom site
+        this.components = new WeightedQuickUnionUF(N * N + 2);
         this.opened = new boolean[N * N];
         this.openedCount = 0;
+        for (int i = 0; i < N; i++) {
+            components.union(N * N, rowColToIndex(0, i));
+            components.union(N * N + 1, rowColToIndex(N - 1, i));
+        }
     }
 
     // open the site (row, col) if it is not open already
@@ -63,7 +68,7 @@ public class Percolation {
         if (row < 0 || row >= N || col < 0 || col >= N) {
             throw new IndexOutOfBoundsException("row and col must be between 0 and N - 1.");
         }
-        return isOpen(row, col) && components.find(rowColToIndex(row, col)) < N;
+        return isOpen(row, col) && components.connected(N * N, rowColToIndex(row, col));
     }
 
     // number of open sites
@@ -73,8 +78,7 @@ public class Percolation {
 
     // does the system percolate?
     public boolean percolates() {
-        // TODO
-        return false;
+        return components.connected(N * N, N * N + 1);
     }
 
     public static void main(String[] args) {
