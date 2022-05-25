@@ -36,9 +36,6 @@ public class Percolation {
         }
         opened[rowColToIndex(row, col)] = true;
         openedCount += 1;
-        if (row == N - 1) {
-            someBottomSiteOpened = true;
-        }
         if (row > 0 && isOpen(row - 1, col)) {
             components.union(rowColToIndex(row, col), rowColToIndex(row - 1, col));
         }
