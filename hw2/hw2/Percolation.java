@@ -81,6 +81,9 @@ public class Percolation {
 
     // does the system percolate?
     public boolean percolates() {
+        if (N == 1) {
+            return isOpen(0, 0);
+        }
         return components.connected(N * N, N * N + 1);
     }
 
