@@ -23,7 +23,7 @@ public class PercolationStats {
             StdRandom.shuffle(indices);
             int j = 0;
             while (!perc.percolates()) {
-                perc.open(j / 10, j % 10);
+                perc.open(j / N, j % N);
                 j += 1;
             }
             fractions[i] = (double) perc.numberOfOpenSites() / (double) (N * N);
