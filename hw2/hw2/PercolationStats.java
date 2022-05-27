@@ -16,10 +16,27 @@ public class PercolationStats {
         double[] fractions = new double[T];
         for (int i = 0; i < T; i++) {
             Percolation perc = pf.make(N);
-            while (!perc.percolates()) {
-
+            int[] indices = new int[N * N];
+            for (int j = 0; j < N * N; j++) {
+                indices[j] = j;
             }
+            StdRandom.shuffle(indices);
+            int j = 0;
+            while (!perc.percolates()) {
+                perc.open(j / 10, j % 10);
+                j += 1;
+            }
+            fractions[i] = (double) perc.numberOfOpenSites() / (double) (N * N);
         }
+        this.mean = StdStats.mean(fractions);
+        if (T == 1) {
+            this.stddev = Double.NaN;
+        } else {
+            this.stddev = StdStats.stddev(fractions);
+        }
+        double halfLength = 1.96 * this.stddev / Math.sqrt(T);
+        this.confidenceHigh = this.mean + halfLength;
+        this.confidenceLow = this.mean - halfLength;
     }
     // sample mean of percolation threshold
     public double mean() {
