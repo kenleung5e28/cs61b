@@ -39,19 +39,22 @@ public class Percolation {
         if (row < 0 || row >= N || col < 0 || col >= N) {
             throw new IndexOutOfBoundsException("row and col must be between 0 and N - 1.");
         }
-        opened[rowColToIndex(row, col)] = true;
-        openedCount += 1;
+        int i = rowColToIndex(row, col);
+        if (!opened[i]) {
+            opened[i] = true;
+            openedCount += 1;
+        }
         if (row > 0 && isOpen(row - 1, col)) {
-            components.union(rowColToIndex(row, col), rowColToIndex(row - 1, col));
+            components.union(i, rowColToIndex(row - 1, col));
         }
         if (row < N - 1 && isOpen(row + 1, col)) {
-            components.union(rowColToIndex(row, col), rowColToIndex(row + 1, col));
+            components.union(i, rowColToIndex(row + 1, col));
         }
         if (col > 0 && isOpen(row, col - 1)) {
-            components.union(rowColToIndex(row, col), rowColToIndex(row, col - 1));
+            components.union(i, rowColToIndex(row, col - 1));
         }
         if (col < N - 1 && isOpen(row, col + 1)) {
-            components.union(rowColToIndex(row, col), rowColToIndex(row, col + 1));
+            components.union(i, rowColToIndex(row, col + 1));
         }
     }
 
