@@ -8,6 +8,7 @@ public class Percolation {
     // call is needed to test for percolation
     private final int N;
     private final WeightedQuickUnionUF components;
+    private final WeightedQuickUnionUF noSinkComponents;
     private final boolean[] opened;
     private int openedCount;
 
@@ -26,10 +27,12 @@ public class Percolation {
         // The second-to-last site is the extra top site
         // and the last site is the extra bottom site
         this.components = new WeightedQuickUnionUF(N * N + 2);
+        this.noSinkComponents = new WeightedQuickUnionUF(N * N + 1);
         this.opened = new boolean[N * N];
         this.openedCount = 0;
         for (int i = 0; i < N; i++) {
             components.union(N * N, rowColToIndex(0, i));
+            noSinkComponents.union(N * N, rowColToIndex(0, i));
             components.union(N * N + 1, rowColToIndex(N - 1, i));
         }
     }
@@ -46,15 +49,19 @@ public class Percolation {
         }
         if (row > 0 && isOpen(row - 1, col)) {
             components.union(i, rowColToIndex(row - 1, col));
+            noSinkComponents.union(i, rowColToIndex(row - 1, col));
         }
         if (row < N - 1 && isOpen(row + 1, col)) {
             components.union(i, rowColToIndex(row + 1, col));
+            noSinkComponents.union(i, rowColToIndex(row + 1, col));
         }
         if (col > 0 && isOpen(row, col - 1)) {
             components.union(i, rowColToIndex(row, col - 1));
+            noSinkComponents.union(i, rowColToIndex(row, col - 1));
         }
         if (col < N - 1 && isOpen(row, col + 1)) {
             components.union(i, rowColToIndex(row, col + 1));
+            noSinkComponents.union(i, rowColToIndex(row, col + 1));
         }
     }
 
@@ -71,7 +78,7 @@ public class Percolation {
         if (row < 0 || row >= N || col < 0 || col >= N) {
             throw new IndexOutOfBoundsException("row and col must be between 0 and N - 1.");
         }
-        return isOpen(row, col) && components.connected(N * N, rowColToIndex(row, col));
+        return isOpen(row, col) && noSinkComponents.connected(N * N, rowColToIndex(row, col));
     }
 
     // number of open sites
