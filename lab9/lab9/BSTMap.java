@@ -50,8 +50,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         int sign = key.compareTo(p.key);
         if (sign == 0) {
             return p.value;
-        }
-        else if (sign < 0) {
+        } else if (sign < 0) {
             return getHelper(key, p.left);
         } else {
             return getHelper(key, p.right);
@@ -71,6 +70,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
      */
     private Node putHelper(K key, V value, Node p) {
         if (p == null) {
+            size += 1;
             return new Node(key, value);
         }
         int sign = key.compareTo(p.key);
@@ -95,7 +95,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     /* Returns the number of key-value mappings in this map. */
     @Override
     public int size() {
-        throw new UnsupportedOperationException();
+        return size;
     }
 
     //////////////// EVERYTHING BELOW THIS LINE IS OPTIONAL ////////////////
