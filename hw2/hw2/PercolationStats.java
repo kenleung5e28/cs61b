@@ -23,7 +23,7 @@ public class PercolationStats {
             StdRandom.shuffle(indices);
             int j = 0;
             while (!perc.percolates()) {
-                perc.open(j / N, j % N);
+                perc.open(indices[j] / N, indices[j] % N);
                 j += 1;
             }
             fractions[i] = (double) perc.numberOfOpenSites() / (double) (N * N);
@@ -54,4 +54,9 @@ public class PercolationStats {
     public double confidenceHigh() {
         return confidenceHigh;
     }
+
+//    public static void main(String[] args) {
+//        PercolationStats stats = new PercolationStats(2, 5, new PercolationFactory());
+//        stats = new PercolationStats(2, 5, new PercolationFactory());
+//    }
 }
