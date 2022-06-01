@@ -153,7 +153,7 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
         @Override
         public boolean containsAll(Collection<?> c) {
             for (Object item : c) {
-                if (!contains(c)) {
+                if (!contains(item)) {
                     return false;
                 }
             }
