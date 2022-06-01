@@ -1,8 +1,6 @@
 package lab9;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 /**
  *  A hash table-backed Map implementation. Provides amortized constant time
@@ -90,11 +88,97 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
     /* Returns a Set view of the keys contained in this map. */
     @Override
     public Set<K> keySet() {
-        HashSet<K> keys = new HashSet<>();
-        for (ArrayMap<K, V> bucket : buckets) {
-            keys.addAll(bucket.keySet());
+        return new SetView(this);
+    }
+
+    private class SetView implements Set<K> {
+        private MyHashMap<K, V> origin;
+
+        public SetView(MyHashMap<K, V> hashMap) {
+            origin = hashMap;
         }
-        return keys;
+        @Override
+        public int size() {
+            return origin.size();
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return origin.size() == 0;
+        }
+
+        @Override
+        public boolean contains(Object o) {
+            K key = (K)o;
+            return origin.containsKey(key);
+        }
+
+        @Override
+        public Iterator<K> iterator() {
+            return origin.iterator();
+        }
+
+        @Override
+        public Object[] toArray() {
+            Iterator<K> iter = origin.iterator();
+            int n = origin.size();
+            Object[] arr = new Object[n];
+            for (int i = 0; i < n; i++) {
+                arr[i] = iter.next();
+            }
+            return arr;
+        }
+
+        @Override
+        public <T> T[] toArray(T[] a) {
+            Iterator<K> iter = origin.iterator();
+            int n = origin.size();
+            ArrayList<T> list = new ArrayList<>(n);
+            for (int i = 0; i < n; i++) {
+                list.add((T)iter.next());
+            }
+            return list.toArray(a);
+        }
+
+        @Override
+        public boolean add(K k) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public boolean remove(Object o) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public boolean containsAll(Collection<?> c) {
+            for (Object item : c) {
+                if (!contains(c)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        @Override
+        public boolean addAll(Collection<? extends K> c) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public boolean retainAll(Collection<?> c) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public boolean removeAll(Collection<?> c) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public void clear() {
+            throw new UnsupportedOperationException();
+        }
     }
 
     /* Removes the mapping for the specified key from this map if exists.
@@ -117,6 +201,37 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
 
     @Override
     public Iterator<K> iterator() {
-        return keySet().iterator();
+       return new MyHashMapIterator();
+    }
+
+    private class MyHashMapIterator implements Iterator<K> {
+        int count;
+        int bucketIndex;
+        Iterator<K> bucketIterator;
+
+        public MyHashMapIterator() {
+            count = 0;
+            bucketIndex = 0;
+            bucketIterator = buckets[bucketIndex].iterator();
+        }
+
+        @Override
+        public boolean hasNext() {
+            return count == size();
+        }
+
+        @Override
+        public K next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException("Iterator has reached the end");
+            }
+            while (!bucketIterator.hasNext()) {
+                bucketIndex += 1;
+                bucketIterator = buckets[bucketIndex].iterator();
+            }
+            K item = bucketIterator.next();
+            count += 1;
+            return item;
+        }
     }
 }
