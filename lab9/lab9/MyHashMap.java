@@ -217,7 +217,7 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
 
         @Override
         public boolean hasNext() {
-            return count == size();
+            return count < size();
         }
 
         @Override
