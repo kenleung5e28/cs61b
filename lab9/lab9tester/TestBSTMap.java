@@ -2,6 +2,7 @@ package lab9tester;
 
 import static org.junit.Assert.*;
 
+import edu.princeton.cs.algs4.BST;
 import org.junit.Test;
 import lab9.BSTMap;
 
@@ -84,6 +85,21 @@ public class TestBSTMap {
         b.put("hi", 1);
         assertTrue(b.containsKey("hi"));
         assertTrue(b.get("hi") != null);
+    }
+
+    @Test
+    public void BSTRemoveTest() {
+        BSTMap<Integer, Integer> b = new BSTMap<>();
+        b.put(10, 10);
+        b.put(5, 5);
+        b.put(6, 6);
+        b.put(7, 7);
+        b.put(9, 9);
+        b.put(12, 12);
+        b.put(3, 3);
+        b.put(1, 1);
+        b.put(4, 4);
+        assertEquals((Integer)10, b.remove(10));
     }
 
     public static void main(String[] args) {

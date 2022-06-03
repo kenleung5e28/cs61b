@@ -172,22 +172,23 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         return p.right == null ? p.left : p.right;
     }
 
+    // replace the node to be removed by the greatest node less than it
     private Node removeNodeWithTwoChildren(Node p) {
-        // replace the node to be removed by the greatest node less than it
-        if (p.left.right == null) {
-            p.value = p.left.value;
-            p.left = removeNodeWithAtMostOneChild(p.left);
-            return p;
-        }
         Node parent = p;
         Node target = p.left;
+        if (target.right == null) {
+            target.left = removeNodeWithAtMostOneChild(target);
+            target.right = p.right;
+            return target;
+        }
         while (target.right != null) {
             parent = target;
             target = target.right;
         }
-        p.value = target.value;
         parent.right = removeNodeWithAtMostOneChild(target);
-        return p;
+        target.left = p.left;
+        target.right = p.right;
+        return target;
     }
 
     @Override
