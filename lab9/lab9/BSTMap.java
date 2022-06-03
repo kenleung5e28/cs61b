@@ -2,6 +2,7 @@ package lab9;
 
 import java.util.Iterator;
 import java.util.Set;
+import java.util.Stack;
 
 /**
  * Implementation of interface Map61B with BST as core data structure.
@@ -198,15 +199,30 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     }
 
     private class BSTMapIterator implements Iterator<K> {
+        private final Stack<Node> stack;
+
+        private void pushAllLeftChildren(Node p) {
+            while (p != null) {
+                stack.push(p);
+                p = p.left;
+            }
+        }
+
+        public BSTMapIterator() {
+            stack = new Stack<>();
+            pushAllLeftChildren(root);
+        }
 
         @Override
         public boolean hasNext() {
-            return false;
+            return !stack.empty();
         }
 
         @Override
         public K next() {
-            return null;
+            Node p = stack.pop();
+            pushAllLeftChildren(p.right);
+            return p.key;
         }
     }
 }

@@ -6,6 +6,8 @@ import edu.princeton.cs.algs4.BST;
 import org.junit.Test;
 import lab9.BSTMap;
 
+import java.util.ArrayList;
+
 /**
  * Tests by Brendan Hu, Spring 2015, revised for 2018 by Josh Hug
  */
@@ -118,6 +120,24 @@ public class TestBSTMap {
         b.put(12, 12);
         assertEquals((Integer)10, b.remove(10));
         assertEquals(2, b.size());
+    }
+
+    @Test
+    public void BSTIteratorTest() {
+        BSTMap<Integer, Integer> b = new BSTMap<>();
+        b.put(10, 10);
+        b.put(5, 5);
+        b.put(6, 6);
+        b.put(9, 9);
+        b.put(3, 3);
+        b.put(1, 1);
+        b.put(4, 4);
+        ArrayList<Integer> l = new ArrayList<>();
+        for (Integer k: b) {
+            l.add(k);
+        }
+        Integer[] expected = new Integer[]{1, 3, 4, 5, 6, 9, 10};
+        assertArrayEquals(expected, l.toArray(expected));
     }
 
     public static void main(String[] args) {
