@@ -112,7 +112,8 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
      */
     @Override
     public V remove(K key) {
-        throw new UnsupportedOperationException();
+        RemoveResult result = removeHelper(key, null, root, false);
+        return result.success ? result.value : null;
     }
 
     /** Removes the key-value entry for the specified key only if it is
@@ -121,7 +122,70 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
      **/
     @Override
     public V remove(K key, V value) {
-        throw new UnsupportedOperationException();
+        RemoveResult result = removeHelper(key, value, root, true);
+        return result.success ? result.value : null;
+    }
+
+    private class RemoveResult {
+        public boolean success;
+        public V value;
+        public Node node;
+        public RemoveResult(boolean success, V value, Node node) {
+            this.success = success;
+            this.value = value;
+            this.node = node;
+        }
+    }
+
+    private RemoveResult removeHelper(K key, V value, Node p, boolean checkValue) {
+        if (p == null) {
+            return new RemoveResult(false, null, null);
+        }
+        int sign = key.compareTo(p.key);
+        RemoveResult result;
+        if (sign < 0) {
+            result = removeHelper(key, value, p.left, checkValue);
+            p.left = result.node;
+            result.node = p;
+        } else if (sign > 0) {
+            result = removeHelper(key, value, p.right, checkValue);
+            p.right = result.node;
+            result.node = p;
+        } else {
+            if (checkValue && p.value != value) {
+                return new RemoveResult(false, null, p);
+            }
+            result = new RemoveResult(true, p.value, null);
+            if (p.left != null && p.right != null) {
+                result.node = removeNodeWithTwoChildren(p);
+            } else {
+                result.node = removeNodeWithAtMostOneChild(p);
+            }
+        }
+        return result;
+    }
+
+
+    private Node removeNodeWithAtMostOneChild(Node p) {
+        return p.right == null ? p.left : p.right;
+    }
+
+    private Node removeNodeWithTwoChildren(Node p) {
+        // replace the node to be removed by the greatest node less than it
+        if (p.left.right == null) {
+            p.value = p.left.value;
+            p.left = removeNodeWithAtMostOneChild(p.left);
+            return p;
+        }
+        Node parent = p;
+        Node target = p.left;
+        while (target.right != null) {
+            parent = target;
+            target = target.right;
+        }
+        p.value = target.value;
+        parent.right = removeNodeWithAtMostOneChild(target);
+        return p;
     }
 
     @Override
