@@ -163,6 +163,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
             } else {
                 result.node = removeNodeWithAtMostOneChild(p);
             }
+            size -= 1;
         }
         return result;
     }

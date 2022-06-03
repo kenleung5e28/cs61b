@@ -100,6 +100,24 @@ public class TestBSTMap {
         b.put(1, 1);
         b.put(4, 4);
         assertEquals((Integer)10, b.remove(10));
+        assertEquals(8, b.size());
+    }
+
+    @Test
+    public void BSTOneNodeOnlyRemoveTest() {
+        BSTMap<Integer, Integer> b = new BSTMap<>();
+        b.put(10, 10);
+        assertEquals((Integer)10, b.remove(10));
+        assertEquals(0, b.size());
+    }
+
+    @Test
+    public void BSTSmallRemoveTest() {
+        BSTMap<Integer, Integer> b = new BSTMap<>();
+        b.put(10, 10);
+        b.put(12, 12);
+        assertEquals((Integer)10, b.remove(10));
+        assertEquals(2, b.size());
     }
 
     public static void main(String[] args) {
