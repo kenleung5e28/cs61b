@@ -119,7 +119,7 @@ public class TestBSTMap {
         b.put(10, 10);
         b.put(12, 12);
         assertEquals((Integer)10, b.remove(10));
-        assertEquals(2, b.size());
+        assertEquals(1, b.size());
     }
 
     @Test
