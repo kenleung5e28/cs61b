@@ -39,8 +39,8 @@ public class TestComplexOomage {
 
         for (int i = 0; i < 10; i++) {
             ArrayList<Integer> params = new ArrayList<>();
-            for (int j = 0; j <= i; j++) {
-                params.add((j * 10 + 1) % 256);
+            for (int j = 0; j < 10; j++) {
+                params.add((i * j));
             }
             params.add(45);
             params.add(77);
