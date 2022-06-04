@@ -1,8 +1,6 @@
 package lab9;
 
-import java.util.Iterator;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * Implementation of interface Map61B with BST as core data structure.
@@ -104,7 +102,93 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     /* Returns a Set view of the keys contained in this map. */
     @Override
     public Set<K> keySet() {
-        throw new UnsupportedOperationException();
+        return new SetView();
+    }
+
+    private class SetView implements Set<K> {
+
+        @Override
+        public int size() {
+            return BSTMap.this.size();
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return size() == 0;
+        }
+
+        @Override
+        public boolean contains(Object o) {
+            K key = (K)o;
+            return BSTMap.this.containsKey(key);
+        }
+
+        @Override
+        public Iterator<K> iterator() {
+            return BSTMap.this.iterator();
+        }
+
+        @Override
+        public Object[] toArray() {
+            Iterator<K> iter = iterator();
+            int n = size();
+            Object[] arr = new Object[n];
+            for (int i = 0; i < n; i++) {
+                arr[i] = iter.next();
+            }
+            return arr;
+        }
+
+        @Override
+        public <T> T[] toArray(T[] a) {
+            Iterator<K> iter = iterator();
+            int n = size();
+            ArrayList<T> list = new ArrayList<>(n);
+            for (int i = 0; i < n; i++) {
+                list.add((T)iter.next());
+            }
+            return list.toArray(a);
+        }
+
+        @Override
+        public boolean add(K k) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public boolean remove(Object o) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public boolean containsAll(Collection<?> c) {
+            for (Object item : c) {
+                if (!contains(item)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        @Override
+        public boolean addAll(Collection<? extends K> c) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public boolean retainAll(Collection<?> c) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public boolean removeAll(Collection<?> c) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public void clear() {
+            throw new UnsupportedOperationException();
+        }
     }
 
     /** Removes KEY from the tree if present
