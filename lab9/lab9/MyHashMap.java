@@ -88,40 +88,35 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
     /* Returns a Set view of the keys contained in this map. */
     @Override
     public Set<K> keySet() {
-        return new SetView(this);
+        return new SetView();
     }
 
     private class SetView implements Set<K> {
-        private MyHashMap<K, V> origin;
-
-        public SetView(MyHashMap<K, V> hashMap) {
-            origin = hashMap;
-        }
         @Override
         public int size() {
-            return origin.size();
+            return MyHashMap.this.size();
         }
 
         @Override
         public boolean isEmpty() {
-            return origin.size() == 0;
+            return MyHashMap.this.size() == 0;
         }
 
         @Override
         public boolean contains(Object o) {
             K key = (K)o;
-            return origin.containsKey(key);
+            return MyHashMap.this.containsKey(key);
         }
 
         @Override
         public Iterator<K> iterator() {
-            return origin.iterator();
+            return MyHashMap.this.iterator();
         }
 
         @Override
         public Object[] toArray() {
-            Iterator<K> iter = origin.iterator();
-            int n = origin.size();
+            Iterator<K> iter = MyHashMap.this.iterator();
+            int n = MyHashMap.this.size();
             Object[] arr = new Object[n];
             for (int i = 0; i < n; i++) {
                 arr[i] = iter.next();
@@ -131,8 +126,8 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
 
         @Override
         public <T> T[] toArray(T[] a) {
-            Iterator<K> iter = origin.iterator();
-            int n = origin.size();
+            Iterator<K> iter = MyHashMap.this.iterator();
+            int n = MyHashMap.this.size();
             ArrayList<T> list = new ArrayList<>(n);
             for (int i = 0; i < n; i++) {
                 list.add((T)iter.next());
