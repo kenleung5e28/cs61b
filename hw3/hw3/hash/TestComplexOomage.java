@@ -40,11 +40,9 @@ public class TestComplexOomage {
 
         for (int i = 0; i < 10; i++) {
             ArrayList<Integer> params = new ArrayList<>();
-            for (int j = 0; j < 6; j++) {
+            for (int j = 0; j < 8; j++) {
                 params.add(StdRandom.uniform(0, 256));
             }
-            params.add(13);
-            params.add(61);
             params.add(255);
             params.add(48);
             ComplexOomage oo = new ComplexOomage(params);
