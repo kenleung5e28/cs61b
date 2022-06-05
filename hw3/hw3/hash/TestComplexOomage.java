@@ -38,7 +38,7 @@ public class TestComplexOomage {
     public void testWithDeadlyParams() {
         List<Oomage> deadlyList = new ArrayList<>();
 
-        int M = StdRandom.uniform(1, 11);
+        int M = StdRandom.uniform(100, 1000);
         for (int i = 0; i < M; i++) {
             ArrayList<Integer> params = new ArrayList<>();
             int N = StdRandom.uniform(1, 7);
