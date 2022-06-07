@@ -96,7 +96,9 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         }
     }
 
-
+    private boolean lessThan(int index1, int index2) {
+        return min(index1, index2) == index1;
+    }
     /**
      * Bubbles up the node currently at the given index.
      */
@@ -108,7 +110,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
             return;
         }
         int parent = parentIndex(index);
-        if (min(parent, index) == index) {
+        if (lessThan(index, parent)) {
             swap(parent, index);
             swim(parent);
         }
@@ -121,8 +123,28 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         // Throws an exception if index is invalid. DON'T CHANGE THIS LINE.
         validateSinkSwimArg(index);
 
-        /** TODO: Your code here. */
-        return;
+        int left = leftIndex(index);
+        int right = rightIndex(index);
+        if (!inBounds(left)) {
+            return;
+        }
+        if (!inBounds(right)) {
+            if (lessThan(left, index)) {
+                swap(index, left);
+                sink(left);
+            }
+        } else if (lessThan(left, index)) {
+            if (lessThan(right, left)) {
+                swap(index, right);
+                sink(right);
+            } else {
+                swap(index, left);
+                sink(left);
+            }
+        } else if (lessThan(right, index)) {
+            swap(index, right);
+            sink(right);
+        }
     }
 
     /**
