@@ -224,7 +224,9 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         swap(index, size);
         contents[size] = null;
         size -= 1;
-        swim(index);
+        if (index < size) {
+            swim(index);
+        }
         insert(item, priority);
     }
 
@@ -345,6 +347,30 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         assertEquals("x3", pq.contents[6].myItem);
         assertEquals("x7", pq.contents[7].myItem);
     }
+
+//    @Test
+//    public void testChangePriority() {
+//        ArrayHeap<String> pq = new ArrayHeap<>();
+//        pq.size = 7;
+//        for (int i = 1; i <= 7; i += 1) {
+//            pq.contents[i] = new ArrayHeap<String>.Node("x" + i, i);
+//        }
+//        System.out.println("PQ before priority change:");
+//        System.out.println(pq);
+//
+//        // Change item x6's priority to a low value.
+//
+//        pq.changePriority("x3", 10);
+//        System.out.println("PQ after priority change");
+//        System.out.println(pq);
+//        assertEquals("x6", pq.contents[1].myItem);
+//        assertEquals("x2", pq.contents[2].myItem);
+//        assertEquals("x1", pq.contents[3].myItem);
+//        assertEquals("x4", pq.contents[4].myItem);
+//        assertEquals("x5", pq.contents[5].myItem);
+//        assertEquals("x3", pq.contents[6].myItem);
+//        assertEquals("x7", pq.contents[7].myItem);
+//    }
 
     @Test
     public void testSink() {
