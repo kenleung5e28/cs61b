@@ -17,5 +17,4 @@ public class Board {
         s.append("\n");
         return s.toString();
     }*/
-
 }
