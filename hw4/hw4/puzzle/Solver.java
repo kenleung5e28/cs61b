@@ -11,14 +11,24 @@ public class Solver {
         private int moves;
         private SearchNode previous;
 
+        private int estimatedDistanceToGoal;
+
         public SearchNode(WorldState state, int moves, SearchNode previous) {
             this.state = state;
             this.moves = moves;
             this.previous = previous;
+            this.estimatedDistanceToGoal = -1;
         }
 
         public WorldState state() {
             return this.state;
+        }
+
+        private int estimatedDistanceToGoal() {
+            if (estimatedDistanceToGoal == -1) {
+                estimatedDistanceToGoal = state.estimatedDistanceToGoal();
+            }
+            return estimatedDistanceToGoal;
         }
 
         public int moves() {
@@ -30,7 +40,7 @@ public class Solver {
         }
 
         public int priority() {
-            return moves + state.estimatedDistanceToGoal();
+            return moves + estimatedDistanceToGoal();
         }
     }
 
