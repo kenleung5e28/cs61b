@@ -55,7 +55,11 @@ public class Solver {
                 break;
             }
             int moves = node.moves();
+            SearchNode previous = node.previous();
             for (WorldState neighbor : state.neighbors()) {
+                if (previous != null && previous.state.equals(neighbor)) {
+                    continue;
+                }
                 pq.insert(new SearchNode(neighbor, moves + 1, node));
             }
         }
