@@ -52,12 +52,12 @@ public class Solver {
     }
 
     private ArrayList<WorldState> solutionMoveSequence;
-    private int numOfNodesEnqueued;
+    // private int numOfNodesEnqueued;
 
     public Solver(WorldState initial) {
         MinPQ<SearchNode> pq = new MinPQ<>(new SearchNodeComparator());
         pq.insert(new SearchNode(initial, 0, null));
-        numOfNodesEnqueued = 1;
+        // numOfNodesEnqueued = 1;
         SearchNode goal;
         while (true) {
             SearchNode node = pq.delMin();
@@ -73,7 +73,7 @@ public class Solver {
                     continue;
                 }
                 pq.insert(new SearchNode(neighbor, moves + 1, node));
-                numOfNodesEnqueued += 1;
+                // numOfNodesEnqueued += 1;
             }
         }
         solutionMoveSequence = new ArrayList<>();
@@ -92,7 +92,7 @@ public class Solver {
         return solutionMoveSequence;
     }
 
-    public int numOfNodesEnqueued() {
-        return numOfNodesEnqueued;
-    }
+//    public int numOfNodesEnqueued() {
+//        return numOfNodesEnqueued;
+//    }
 }
