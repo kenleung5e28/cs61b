@@ -7,8 +7,15 @@ public class Board implements WorldState {
     private int N;
 
     public Board(int[][] tiles) {
-        this.tiles = tiles;
-        this.N = tiles.length;
+        N = tiles.length;
+        int[][] copy = new int[N][];
+        for (int i = 0; i < N; i++) {
+            copy[i] = new int[N];
+            for (int j = 0; j < N; j++) {
+                copy[i][j] = tiles[i][j];
+            }
+        }
+        this.tiles = copy;
     }
 
     public int tileAt(int i, int j) {
