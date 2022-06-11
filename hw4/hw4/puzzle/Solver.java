@@ -13,7 +13,7 @@ public class Solver {
 
         private int estimatedDistanceToGoal;
 
-        public SearchNode(WorldState state, int moves, SearchNode previous) {
+        SearchNode(WorldState state, int moves, SearchNode previous) {
             this.state = state;
             this.moves = moves;
             this.previous = previous;

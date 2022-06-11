@@ -11,9 +11,7 @@ public class Board implements WorldState {
         int[][] copy = new int[N][];
         for (int i = 0; i < N; i++) {
             copy[i] = new int[N];
-            for (int j = 0; j < N; j++) {
-                copy[i][j] = tiles[i][j];
-            }
+            System.arraycopy(tiles, 0, copy, 0, N);
         }
         this.tiles = copy;
     }
@@ -74,6 +72,9 @@ public class Board implements WorldState {
     }
 
     public boolean equals(Object y) {
+        if (y == null) {
+            return false;
+        }
         if (y == this) {
             return true;
         }
@@ -93,6 +94,16 @@ public class Board implements WorldState {
             }
         }
         return true;
+    }
+
+    public int hashCode() {
+        int code = 0;
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                code += 31 * code + tiles[i][j];
+            }
+        }
+        return code;
     }
 
     @Override
@@ -146,11 +157,11 @@ public class Board implements WorldState {
 
     public String toString() {
         StringBuilder s = new StringBuilder();
-        int N = size();
-        s.append(N + "\n");
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                s.append(String.format("%2d ", tileAt(i,j)));
+        int size = size();
+        s.append(size + "\n");
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                s.append(String.format("%2d ", tileAt(i, j)));
             }
             s.append("\n");
         }
