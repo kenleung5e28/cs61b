@@ -8,13 +8,55 @@ public class Board implements WorldState {
 
     public Board(int[][] tiles) {
         this.tiles = tiles;
+        this.N = tiles.length;
+    }
+
+    public int tileAt(int i, int j) {
+        if (i < 0 || j < 0 || i >= N || j >= N) {
+            throw new IndexOutOfBoundsException("i and j must be between 0 and " + (N - 1));
+        }
+        return tiles[i][j];
+    }
+
+    public int size() {
+        return N;
+    }
+
+    public int hamming() {
         // TODO
+        return 0;
+    }
+
+    public int manhattan() {
+        // TODO
+        return 0;
+    }
+
+    public boolean equals(Object y) {
+        if (y == this) {
+            return true;
+        }
+        if (y.getClass() != this.getClass()) {
+            return false;
+        }
+        Board other = (Board) y;
+        if (other.size() != this.size()) {
+            return false;
+        }
+        int n = this.size();
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (other.tileAt(i, j) != this.tileAt(i, j)) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     @Override
     public int estimatedDistanceToGoal() {
-        // TODO
-        return 0;
+        return manhattan();
     }
 
     @Override
@@ -61,9 +103,7 @@ public class Board implements WorldState {
         return neighbors;
     }
 
-    /** Returns the string representation of the board. 
-      * Uncomment this method. */
-    /*public String toString() {
+    public String toString() {
         StringBuilder s = new StringBuilder();
         int N = size();
         s.append(N + "\n");
@@ -75,5 +115,5 @@ public class Board implements WorldState {
         }
         s.append("\n");
         return s.toString();
-    }*/
+    }
 }
