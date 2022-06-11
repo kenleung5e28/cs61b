@@ -11,7 +11,9 @@ public class Board implements WorldState {
         int[][] copy = new int[N][];
         for (int i = 0; i < N; i++) {
             copy[i] = new int[N];
-            System.arraycopy(tiles, 0, copy, 0, N);
+            for (int j = 0; j < N; j++) {
+                copy[i][j] = tiles[i][j];
+            }
         }
         this.tiles = copy;
     }
