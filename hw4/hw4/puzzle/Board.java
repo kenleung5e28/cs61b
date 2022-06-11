@@ -29,11 +29,6 @@ public class Board implements WorldState {
         return N;
     }
 
-    public int hamming() {
-        // TODO
-        return 0;
-    }
-
     private int manhattanDistance(int x1, int y1, int x2, int y2) {
         return Math.abs(x1 - x2) + Math.abs(y1 - y2);
     }
@@ -44,6 +39,23 @@ public class Board implements WorldState {
         }
         int x = value - 1;
         return new int[]{x / N, x % N};
+    }
+
+    public int hamming() {
+        int distance = 0;
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                int value = tiles[i][j];
+                if (value == 0) {
+                    continue;
+                }
+                int[] goal = goalPosition(value);
+                if (i != goal[0] || j != goal[1]) {
+                    distance += 1;
+                }
+            }
+        }
+        return distance;
     }
 
     public int manhattan() {
