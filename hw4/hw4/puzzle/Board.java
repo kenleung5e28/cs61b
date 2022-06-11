@@ -27,9 +27,31 @@ public class Board implements WorldState {
         return 0;
     }
 
+    private int manhattanDistance(int x1, int y1, int x2, int y2) {
+        return Math.abs(x1 - x2) + Math.abs(y1 - y2);
+    }
+
+    private int[] goalPosition(int value) {
+        if (value == 0) {
+            return new int[]{N - 1, N - 1};
+        }
+        int x = value - 1;
+        return new int[]{x / N, x % N};
+    }
+
     public int manhattan() {
-        // TODO
-        return 0;
+        int distance = 0;
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                int value = tiles[i][j];
+                if (value == 0) {
+                    continue;
+                }
+                int[] goal = goalPosition(value);
+                distance += manhattanDistance(i, j, goal[0], goal[1]);
+            }
+        }
+        return distance;
     }
 
     public boolean equals(Object y) {
